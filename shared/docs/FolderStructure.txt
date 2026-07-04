@@ -1,0 +1,38 @@
+leetcode-monorepo/
+├── services/
+│   ├── frontend/                 # React UI
+│   │   ├── src/
+│   │   │   ├── components/       # Code editor, problem descriptions, submission tables
+│   │   │   └── context/          # Auth context (storing JWT/user state)
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   │
+│   ├── primary-server/           # API Gateway & Auth Server
+│   │   ├── src/
+│   │   │   ├── config/           # Database, Redis, & Passport/JWT setups
+│   │   │   ├── controllers/      # auth.controller.js & submission.controller.js
+│   │   │   ├── middlewares/      # auth.middleware.js (protects endpoints via JWT)
+│   │   │   ├── routes/           # /api/auth and /api/submissions
+│   │   │   └── server.js
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   │
+│   └── worker-server/            # Code Execution Engine (Consumer)
+│       ├── src/
+│       │   ├── queue/            # Consumer logic listening to RabbitMQ/BullMQ
+│       │   ├── executors/        # Orchestrates Docker sandboxes for compiling/running code
+│       │   │   ├── DockerManager.js
+│       │   │   └── templates/    # Ephemeral runners for specific languages (cpp, python, etc.)
+│       │   └── index.js
+│       ├── Dockerfile            # Configured for Docker-outside-of-Docker (DooD)
+│       └── package.json
+│
+├── shared/                       # Shared models across both backend microservices
+│   └── models/
+│       ├── User.js
+│       ├── Problem.js
+│       └── Submission.js         # Schema holding both PENDING fields and final execution results
+│
+├── docker-compose.yml            # Local orchestration for Frontend, Primary, Worker, Mongo, Redis, & Queue
+├── .gitignore
+└── README.md
