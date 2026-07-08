@@ -1,6 +1,4 @@
-const express = require("express");
-
-const app = express();
+import app from "./app.js";
 
 
 app.listen(4000,()=>{
